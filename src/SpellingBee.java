@@ -98,7 +98,7 @@ public class SpellingBee {
             sorted.add(left.get(i));
             i++;
         }
-        while (i < right.size()){
+        while (j < right.size()){
             sorted.add(right.get(j));
             j++;
         }
@@ -121,8 +121,11 @@ public class SpellingBee {
     //  If it is not in the dictionary, remove it from words.
     public void checkWords() {
         for (int i = 0; i < words.size(); i++) {
+            // Checks the words against a dictionary using outside method check.
             if (!check(words.get(i))) {
                 words.remove(i);
+                // You need i-- because the list is shortening, so if you don't remove you end up skipping words.
+                i--;
             }
         }
     }
@@ -130,9 +133,11 @@ public class SpellingBee {
     public boolean check(String word){
         int low = 0;
         int high = DICTIONARY_SIZE;
+        // Low and high help us to binary search.
         while (low<=high){
             int mid = (high + low)/2;
             int comp = DICTIONARY[mid].compareTo(word);
+            // When comp = 0, the words are the same.
             if (comp == 0){
                 return true;
             }
